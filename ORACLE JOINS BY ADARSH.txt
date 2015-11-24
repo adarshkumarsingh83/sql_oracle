@@ -1,0 +1,405 @@
+
+CREATE TABLE TABLEONE(
+ ID NUMBER(3)
+ ,NAME VARCHAR(45)
+ ,PRIMARY KEY(ID)
+);
+INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME');
+
+SQL> INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME');
+
+Enter value for id: 1
+Enter value for name: ADARSH KUMAR
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(1,'ADARSH KUMAR')
+
+1 row created.
+
+SQL> /
+Enter value for id: 2
+Enter value for name: RADHA SINGH
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(2,'RADHA SINGH')
+
+1 row created.
+
+SQL> /
+Enter value for id: 3
+Enter value for name: AMIT KUMAR
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(3,'AMIT KUMAR')
+
+1 row created.
+
+SQL> /
+Enter value for id: 4
+Enter value for name: TABLEONE4
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(4,'TABLEONE4')
+
+1 row created.
+
+SQL> /
+Enter value for id: 5
+Enter value for name: TABLEONE5
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(5,'TABLEONE5')
+
+1 row created.
+
+SQL> /
+Enter value for id: 6
+Enter value for name: TABLEONE6
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(6,'TABLEONE6')
+
+1 row created.
+
+SQL> /
+Enter value for id: 7
+Enter value for name: TABLEONE7
+old   1: INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLEONE(ID,NAME)VALUES(7,'TABLEONE7')
+
+1 row created.
+
+SQL>
+========================================================================================================================
+
+CREATE TABLE TABLETWO(
+ ID NUMBER(3)
+ ,NAME VARCHAR(45)
+ ,PRIMARY KEY(ID)
+);
+INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME');
+
+SQL> INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME');
+Enter value for id: 1
+Enter value for name: ADARSH KUMAR
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(1,'ADARSH KUMAR')
+
+1 row created.
+
+SQL> /
+Enter value for id: 2
+Enter value for name: RADHA SINGH
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(2,'RADHA SINGH')
+
+1 row created.
+
+SQL> /
+Enter value for id: 3
+Enter value for name: AMIT KUMAR
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(3,'AMIT KUMAR')
+
+1 row created.
+
+SQL> /
+Enter value for id: 4
+Enter value for name: TABLETWO4
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(4,'TABLETWO4')
+
+1 row created.
+
+SQL> /
+Enter value for id: 5
+Enter value for name: TABLETWO5
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(5,'TABLETWO5')
+
+1 row created.
+
+SQL> /
+Enter value for id: 6
+Enter value for name: TABLETWO6
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(6,'TABLETWO6')
+
+1 row created.
+
+SQL> /
+Enter value for id: 7
+Enter value for name: TABLETWO8
+old   1: INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME')
+new   1: INSERT INTO TABLETWO(ID,NAME) VALUES(7,'TABLETWO8')
+
+1 row created.
+
+SQL>
+
+========================================================================================================================
+INNER JOIN
+========================================================================================================================
+SELECT  t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM TableOne t1 INNER JOIN TableTwo t2 ON t1.name = t2.name;
+
+
+SQL> SELECT  t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+     FROM TableOne t1 INNER JOIN TableTwo t2 ON t1.name = t2.name;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ---------------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+
+SQL>
+========================================================================================================================
+LEFT OUTER JOIN 
+========================================================================================================================
+SELECT  t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM  TableOne t1 
+LEFT OUTER JOIN TableTwo t2
+ON t1.name = t2.name;
+
+
+SQL> SELECT  t1.id tableOne_id ,t1.name tableOne_name ,NVL(t2.id tableTwo_id,0 ),NVL(t2.name tableTwo_name,' NO DATA FOUND ')
+    FROM  TableOne t1
+    LEFT OUTER JOIN TableTwo t2
+    ON t1.name = t2.name;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          5 TABLEONE5
+          4 TABLEONE4
+          7 TABLEONE7
+          6 TABLEONE6
+
+7 rows selected.
+
+SQL>
+
+========================================================================================================================
+RIGHT OUTER JOIN 
+========================================================================================================================
+SELECT  t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id  ,t2.name tableTwo_name
+FROM  TableOne t1 RIGHT OUTER JOIN TableTwo t2
+ON t1.name = t2.name;
+
+
+SQL> SELECT  t1.id tableOne_id ,t1.name tableOne_name ,NVL(t2.id,0)AS tableTwo_id  ,NVL(t2.name,'NO DATA FOUND')AS tableTwo_name
+	FROM  TableOne t1 RIGHT OUTER JOIN TableTwo t2
+	ON t1.name = t2.name;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+                                                                    4 TABLETWO4
+                                                                    7 TABLETWO8
+                                                                    5 TABLETWO5
+                                                                    6 TABLETWO6
+
+7 rows selected.
+
+SQL>
+========================================================================================================================
+FULL OUTER JOIN 
+========================================================================================================================
+SELECT  NVL(t1.id,0)AS tableOne_id  ,NVL(t1.name,' NO DATA FOUND')AS tableOne_name 
+	   ,NVL(t2.id,0)AS tableTwo_id  ,NVL(t2.name,'NO DATA FOUND')AS tableTwo_name
+FROM TableOne t1 
+FULL OUTER JOIN TableTwo t2
+ON t1.NAME =t2.NAME;
+  
+/*-------------------------------- alternate syntax:--------------------------------------------*/
+ 
+SELECT   NVL(t1.id,0)AS tableOne_id  ,NVL(t1.name,'NO DATA FOUND')AS tableOne_name 
+         ,NVL(t2.id,0)AS tableTwo_id  ,NVL(t2.name,'NO DATA FOUND')AS tableTwo_name
+FROM TableOne t1 LEFT OUTER JOIN TableTwo t2
+ON t1.name = t2.name
+UNION
+SELECT   NVL(t1.id,0)AS tableOne_id  ,NVL(t1.name,'NO DATA FOUND')AS tableOne_name 
+         ,NVL(t2.id,0)AS tableTwo_id  ,NVL(t2.name,'NO DATA FOUND')AS tableTwo_name
+FROM TableOne t1 RIGHT OUTER JOIN TableTwo t2
+ON t1.name = t2.name;
+
+========================================================================================================================
+CROSS JOIN 
+========================================================================================================================
+ SELECT   t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM  TableOne t1 CROSS JOIN TableTwo t2;
+
+
+SQL>  SELECT   t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+  2  FROM  TableOne t1 CROSS JOIN TableTwo t2;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          1 ADARSH KUMAR                                            2 RADHA SINGH
+          1 ADARSH KUMAR                                            3 AMIT KUMAR
+          1 ADARSH KUMAR                                            4 TABLETWO4
+          1 ADARSH KUMAR                                            5 TABLETWO5
+          1 ADARSH KUMAR                                            6 TABLETWO6
+          1 ADARSH KUMAR                                            7 TABLETWO8
+          2 RADHA SINGH                                             1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          2 RADHA SINGH                                             3 AMIT KUMAR
+          2 RADHA SINGH                                             4 TABLETWO4
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          2 RADHA SINGH                                             5 TABLETWO5
+          2 RADHA SINGH                                             6 TABLETWO6
+          2 RADHA SINGH                                             7 TABLETWO8
+          3 AMIT KUMAR                                              1 ADARSH KUMAR
+          3 AMIT KUMAR                                              2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          3 AMIT KUMAR                                              4 TABLETWO4
+          3 AMIT KUMAR                                              5 TABLETWO5
+          3 AMIT KUMAR                                              6 TABLETWO6
+          3 AMIT KUMAR                                              7 TABLETWO8
+          4 TABLEONE4                                               1 ADARSH KUMAR
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          4 TABLEONE4                                               2 RADHA SINGH
+          4 TABLEONE4                                               3 AMIT KUMAR
+          4 TABLEONE4                                               4 TABLETWO4
+          4 TABLEONE4                                               5 TABLETWO5
+          4 TABLEONE4                                               6 TABLETWO6
+          4 TABLEONE4                                               7 TABLETWO8
+          5 TABLEONE5                                               1 ADARSH KUMAR
+          5 TABLEONE5                                               2 RADHA SINGH
+          5 TABLEONE5                                               3 AMIT KUMAR
+          5 TABLEONE5                                               4 TABLETWO4
+          5 TABLEONE5                                               5 TABLETWO5
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          5 TABLEONE5                                               6 TABLETWO6
+          5 TABLEONE5                                               7 TABLETWO8
+          6 TABLEONE6                                               1 ADARSH KUMAR
+          6 TABLEONE6                                               2 RADHA SINGH
+          6 TABLEONE6                                               3 AMIT KUMAR
+          6 TABLEONE6                                               4 TABLETWO4
+          6 TABLEONE6                                               5 TABLETWO5
+          6 TABLEONE6                                               6 TABLETWO6
+          6 TABLEONE6                                               7 TABLETWO8
+          7 TABLEONE7                                               1 ADARSH KUMAR
+          7 TABLEONE7                                               2 RADHA SINGH
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+---------------
+          7 TABLEONE7                                               3 AMIT KUMAR
+          7 TABLEONE7                                               4 TABLETWO4
+          7 TABLEONE7                                               5 TABLETWO5
+          7 TABLEONE7                                               6 TABLETWO6
+          7 TABLEONE7                                               7 TABLETWO8
+
+49 rows selected.
+
+SQL>
+
+========================================================================================================================
+LEFT OUTER  JOIN WHERE NULL
+========================================================================================================================
+SELECT   t1.id tableOne_id  ,t1.name tableOne_name ,t2.id tableTwo_id  ,t2.name tableTwo_name
+FROM  TableOne t1 LEFT OUTER JOIN TableTwo t2
+ON t1.name = t2.name
+WHERE t2.name IS NULL;
+
+
+SQL> SELECT   t1.id tableOne_id  ,t1.name tableOne_name ,NVL(t2.id,0)AS tableTwo_id  ,NVL(t2.name,'NO DATA FOUND')AS tableTwo_name
+    FROM  TableOne t1 LEFT OUTER JOIN TableTwo t2
+    ON t1.name = t2.name
+    WHERE t2.name IS NULL;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+          5 TABLEONE5
+          4 TABLEONE4
+          7 TABLEONE7
+          6 TABLEONE6
+
+SQL>
+
+========================================================================================================================
+RIGHT OUTER  JOIN WHERE NULL
+========================================================================================================================
+SELECT  t1.id tableOne_id  ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM  TableOne t1 RIGHT OUTER JOIN TableTwo t2  ON t1.name = t2.name
+WHERE t1.name IS NULL;
+
+
+SQL> SELECT  NVL(t1.id,0) AS tableOne_id  ,NVL(t1.name,'NO DATA FOUND')AS tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+     FROM  TableOne t1 RIGHT OUTER JOIN TableTwo t2  ON t1.name = t2.name
+     WHERE t1.name IS NULL;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- -----------------------------
+---------------
+                                                                    4 TABLETWO4
+                                                                    7 TABLETWO8
+                                                                    5 TABLETWO5
+                                                                    6 TABLETWO6
+
+SQL>
+========================================================================================================================
+OUTER JOIN WHERE NULL
+========================================================================================================================
+SELECT
+ t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM TableOne t1 LEFT OUTER JOIN TableTwo t2
+ON t1.name = t2.name
+WHERE t2.id IS NULL
+UNION
+SELECT  t1.id tableOne_id ,t1.name tableOne_name ,t2.id tableTwo_id ,t2.name tableTwo_name
+FROM TableOne t1 RIGHT OUTER JOIN TableTwo t2
+ON t1.name = t2.name
+WHERE t1.id IS NULL;
+
+
+SQL> SELECT
+     NVL(t1.id,0)AS tableOne_id ,NVL(t1.name,'NO DATA FOUND')AS tableOne_name 
+	 ,NVL(t2.id,0)AS tableTwo_id ,NVL(t2.name,'NO DATA FOUND') tableTwo_name
+     FROM TableOne t1 LEFT OUTER JOIN TableTwo t2
+     ON t1.name = t2.name
+     WHERE t2.id IS NULL
+     UNION
+     SELECT  
+	 NVL(t1.id,0)AS tableOne_id ,NVL(t1.name,'NO DATA FOUND')AS tableOne_name 
+	 ,NVL(t2.id,0)AS tableTwo_id ,NVL(t2.name,'NO DATA FOUND') tableTwo_name
+     FROM TableOne t1 RIGHT OUTER JOIN TableTwo t2
+     ON t1.name = t2.name
+    WHERE t1.id IS NULL;
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------------------
+
+          4 TABLEONE4
+          5 TABLEONE5
+          6 TABLEONE6
+          7 TABLEONE7
+                                                                    4 TABLETWO4
+                                                                    5 TABLETWO5
+                                                                    6 TABLETWO6
+                                                                    7 TABLETWO8
+
+8 rows selected.
+
+SQL>
+
+
+
+
+
+
+
+
+
