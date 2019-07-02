@@ -1,0 +1,8 @@
+DRIVER CLASS NAME= oracle.jdbc.driver.OracleDriver
+URL=jdbc:oracle:thin:@localhost:1521:XE
+USER=system
+PWD=admin
+SQL>SELECT ORA_DATABASE_NAME FROM DUAL;
+SQL>SELECT USER FROM DUAL;
+
+

@@ -1,0 +1,588 @@
+SQL>CREATE TABLE TABLEONE(
+ ID NUMBER(3)
+ ,NAME VARCHAR(45)
+ ,PRIMARY KEY(ID)
+);
+SQL> INSERT INTO TABLEONE(ID,NAME)VALUES(&ID,'&NAME');
+
+SQL> SELECT * FROM TABLEONE;
+----------------------------
+ ID NAME
+--- ------------------------
+  1 ADARSH KUMAR
+  2 RADHA SINGH
+  3 AMIT KUMAR
+  4 SONU SINGH
+  5 MONU SINGH
+  6 TABLEONE6
+  7 TABLEONE7
+  8 TABLEONE8
+
+8 rows selected.
+========================================================================================================================
+SQL>CREATE TABLE TABLETWO(
+ ID NUMBER(3)
+ ,NAME VARCHAR(45)
+ ,PRIMARY KEY(ID)
+);
+SQL>INSERT INTO TABLETWO(ID,NAME) VALUES(&ID,'&NAME');
+
+SQL> SELECT * FROM TABLETWO;
+---------------------------
+ ID NAME
+--- ------------------------
+  1 ADARSH KUMAR
+  2 RADHA SINGH
+  3 AMIT KUMAR
+  4 SONU SINGH
+  5 MONU SINGH
+  6 TABLETWO6
+  7 TABLETWO7
+  8 TABLETWO8
+
+8 rows selected.
+========================================================================================================================
+INNER JOIN
+========================================================================================================================
+SQL> SELECT  
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME   
+	 FROM TABLEONE T1
+	 INNER JOIN TABLETWO T2
+	   ON T1.NAME=T2.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- --------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+	
+========================================================================================================================
+LEFT OUTER JOIN 
+========================================================================================================================
+SQL> SELECT  
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME   
+	 FROM TABLEONE T1
+	 LEFT OUTER JOIN TABLETWO T2
+	   ON T1.NAME=T2.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- -----------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+          8 TABLEONE8                                               0 DATA NOT FOUND
+          7 TABLEONE7                                               0 DATA NOT FOUND
+          6 TABLEONE6                                               0 DATA NOT FOUND
+========================================================================================================================
+RIGHT OUTER JOIN 
+========================================================================================================================
+SQL> SELECT  
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME   
+	 FROM TABLEONE T1
+	 RIGHT OUTER JOIN TABLETWO T2
+	   ON T1.NAME=T2.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- --------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+          0 DATA NOT FOUND                                          8 TABLETWO8
+          0 DATA NOT FOUND                                          7 TABLETWO7
+          0 DATA NOT FOUND                                          6 TABLETWO6
+========================================================================================================================
+FULL OUTER JOIN 
+========================================================================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	  
+	 FROM TABLEONE T1
+     FULL OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ---------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+          8 TABLEONE8                                               0 DATA NOT FOUND
+          7 TABLEONE7                                               0 DATA NOT FOUND
+          6 TABLEONE6                                               0 DATA NOT FOUND
+          0 DATA NOT FOUND                                          8 TABLETWO8
+          0 DATA NOT FOUND                                          7 TABLETWO7
+          0 DATA NOT FOUND                                          6 TABLETWO6
+============================= alternate syntax==========================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	 
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME     
+UNION
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	 
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------
+          0 DATA NOT FOUND                                          6 TABLETWO6
+          0 DATA NOT FOUND                                          7 TABLETWO7
+          0 DATA NOT FOUND                                          8 TABLETWO8
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+          6 TABLEONE6                                               0 DATA NOT FOUND
+          7 TABLEONE7                                               0 DATA NOT FOUND
+          8 TABLEONE8                                               0 DATA NOT FOUND
+========================================================================================================================
+CROSS JOIN 
+========================================================================================================================
+SQL>  SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	
+	 FROM TABLEONE T1
+     CROSS JOIN TABLETWO T2;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          1 ADARSH KUMAR                                            1 ADARSH KUMAR
+          1 ADARSH KUMAR                                            2 RADHA SINGH
+          1 ADARSH KUMAR                                            3 AMIT KUMAR
+          1 ADARSH KUMAR                                            4 SONU SINGH
+          1 ADARSH KUMAR                                            5 MONU SINGH
+          1 ADARSH KUMAR                                            6 TABLETWO6
+          1 ADARSH KUMAR                                            7 TABLETWO7
+          1 ADARSH KUMAR                                            8 TABLETWO8
+          2 RADHA SINGH                                             1 ADARSH KUMAR
+          2 RADHA SINGH                                             2 RADHA SINGH
+          2 RADHA SINGH                                             3 AMIT KUMAR
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          2 RADHA SINGH                                             4 SONU SINGH
+          2 RADHA SINGH                                             5 MONU SINGH
+          2 RADHA SINGH                                             6 TABLETWO6
+          2 RADHA SINGH                                             7 TABLETWO7
+          2 RADHA SINGH                                             8 TABLETWO8
+          3 AMIT KUMAR                                              1 ADARSH KUMAR
+          3 AMIT KUMAR                                              2 RADHA SINGH
+          3 AMIT KUMAR                                              3 AMIT KUMAR
+          3 AMIT KUMAR                                              4 SONU SINGH
+          3 AMIT KUMAR                                              5 MONU SINGH
+          3 AMIT KUMAR                                              6 TABLETWO6
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          3 AMIT KUMAR                                              7 TABLETWO7
+          3 AMIT KUMAR                                              8 TABLETWO8
+          4 SONU SINGH                                              1 ADARSH KUMAR
+          4 SONU SINGH                                              2 RADHA SINGH
+          4 SONU SINGH                                              3 AMIT KUMAR
+          4 SONU SINGH                                              4 SONU SINGH
+          4 SONU SINGH                                              5 MONU SINGH
+          4 SONU SINGH                                              6 TABLETWO6
+          4 SONU SINGH                                              7 TABLETWO7
+          4 SONU SINGH                                              8 TABLETWO8
+          5 MONU SINGH                                              1 ADARSH KUMAR
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          5 MONU SINGH                                              2 RADHA SINGH
+          5 MONU SINGH                                              3 AMIT KUMAR
+          5 MONU SINGH                                              4 SONU SINGH
+          5 MONU SINGH                                              5 MONU SINGH
+          5 MONU SINGH                                              6 TABLETWO6
+          5 MONU SINGH                                              7 TABLETWO7
+          5 MONU SINGH                                              8 TABLETWO8
+          6 TABLEONE6                                               1 ADARSH KUMAR
+          6 TABLEONE6                                               2 RADHA SINGH
+          6 TABLEONE6                                               3 AMIT KUMAR
+          6 TABLEONE6                                               4 SONU SINGH
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          6 TABLEONE6                                               5 MONU SINGH
+          6 TABLEONE6                                               6 TABLETWO6
+          6 TABLEONE6                                               7 TABLETWO7
+          6 TABLEONE6                                               8 TABLETWO8
+          7 TABLEONE7                                               1 ADARSH KUMAR
+          7 TABLEONE7                                               2 RADHA SINGH
+          7 TABLEONE7                                               3 AMIT KUMAR
+          7 TABLEONE7                                               4 SONU SINGH
+          7 TABLEONE7                                               5 MONU SINGH
+          7 TABLEONE7                                               6 TABLETWO6
+          7 TABLEONE7                                               7 TABLETWO7
+
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ----------------
+          7 TABLEONE7                                               8 TABLETWO8
+          8 TABLEONE8                                               1 ADARSH KUMAR
+          8 TABLEONE8                                               2 RADHA SINGH
+          8 TABLEONE8                                               3 AMIT KUMAR
+          8 TABLEONE8                                               4 SONU SINGH
+          8 TABLEONE8                                               5 MONU SINGH
+          8 TABLEONE8                                               6 TABLETWO6
+          8 TABLEONE8                                               7 TABLETWO7
+          8 TABLEONE8                                               8 TABLETWO8
+
+64 rows selected.
+========================================================================================================================
+LEFT OUTER JOIN WHERE NULL
+========================================================================================================================
+SQL>SELECT
+	  NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+    WHERE T2.NAME IS NULL; 
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ---------------
+          8 TABLEONE8                                               0 DATA NOT FOUND
+          7 TABLEONE7                                               0 DATA NOT FOUND
+          6 TABLEONE6                                               0 DATA NOT FOUND
+========================================================================================================================
+RIGHT OUTER JOIN WHERE NULL
+========================================================================================================================
+SQL> SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	  
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME    
+	  WHERE T1.NAME IS NULL; 
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- --------------
+          0 DATA NOT FOUND                                          8 TABLETWO8
+          0 DATA NOT FOUND                                          7 TABLETWO7
+          0 DATA NOT FOUND                                          6 TABLETWO6
+========================================================================================================================
+OUTER JOIN WHERE NULL
+========================================================================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	 
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME     
+	 WHERE T2.NAME IS NULL
+UNION	 
+   SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME	  
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME     
+	 WHERE T1.NAME IS NULL;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME                                 TABLETWO_ID TABLETWO_NAME
+----------- --------------------------------------------- ----------- ------------------
+          0 DATA NOT FOUND                                          6 TABLETWO6
+          0 DATA NOT FOUND                                          7 TABLETWO7
+          0 DATA NOT FOUND                                          8 TABLETWO8
+          6 TABLEONE6                                               0 DATA NOT FOUND
+          7 TABLEONE7                                               0 DATA NOT FOUND
+          8 TABLEONE8                                               0 DATA NOT FOUND
+========================================================================================================================
+SQL>CREATE TABLE TABLETHREE(
+ ID NUMBER(3)
+ ,NAME VARCHAR(45)
+ ,PRIMARY KEY(ID)
+);
+SQL>INSERT INTO TABLETHREE(ID,NAME) VALUES(&ID,'&NAME');
+
+SQL> SELECT * FROM TABLETHREE;
+-------------------------------
+        ID NAME
+---------- --------------------
+         1 ADARSH KUMAR
+         2 RADHA SINGH
+         3 AMIT KUMAR
+         4 SONU SINGH
+         5 MONU SINGH
+         6 TABLETHREE6
+         7 TABLETHREE7
+         8 TABLETHREE8
+
+8 rows selected.
+========================================================================================================================
+INNER JOIN THREE TABLE
+========================================================================================================================
+SQL>INNER JOIN TABLETHREE T3
+     ON T1.ID=T3.ID;	
+	 SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     INNER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     INNER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME  TABLETWO_ID TABLETWO_NAME  TABLETHREE_ID TABLETHREE_NAME
+----------- ----------------------------------------- ----------- --------------------------------------------- ------------- --------
+          1 ADARSH KUMAR         1 ADARSH KUMAR            1 ADARSH KUMAR
+          2 RADHA SINGH          2 RADHA SINGH             2 RADHA SINGH
+          3 AMIT KUMAR           3 AMIT KUMAR              3 AMIT KUMAR
+          4 SONU SINGH           4 SONU SINGH              4 SONU SINGH
+          5 MONU SINGH           5 MONU SINGH              5 MONU SINGH	 
+========================================================================================================================
+LEFT OUTER JOIN THREE TABLE
+========================================================================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     LEFT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+	 ORDER BY T1.ID;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME  TABLETWO_ID TABLETWO_NAME    TABLETHREE_ID TABLETHREE_NAME
+----------- -------------  ----------- --------------- ------------- -----------------
+          1 ADARSH KUMAR      1 ADARSH KUMAR             1 ADARSH KUMAR
+          2 RADHA SINGH       2 RADHA SINGH              2 RADHA SINGH
+          3 AMIT KUMAR        3 AMIT KUMAR               3 AMIT KUMAR
+          4 SONU SINGH        4 SONU SINGH               4 SONU SINGH
+          5 MONU SINGH        5 MONU SINGH               5 MONU SINGH
+          6 TABLEONE6         0 DATA NOT FOUND           0 DATA NOT FOUND
+          7 TABLEONE7         0 DATA NOT FOUND           0 DATA NOT FOUND
+          8 TABLEONE8         0 DATA NOT FOUND           0 DATA NOT FOUND
+========================================================================================================================
+RIGHT OUTER JOIN THREE TABLE
+========================================================================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     RIGHT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+	 ORDER BY T1.ID;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME  TABLETWO_ID TABLETWO_NAME    TABLETHREE_ID TABLETHREE_NAME
+----------- -------------- ----------- --------------------------------------------- ------------- ---------
+          1 ADARSH KUMAR         1 ADARSH KUMAR           1 ADARSH KUMAR
+          2 RADHA SINGH          2 RADHA SINGH            2 RADHA SINGH
+          3 AMIT KUMAR           3 AMIT KUMAR             3 AMIT KUMAR
+          4 SONU SINGH           4 SONU SINGH             4 SONU SINGH
+          5 MONU SINGH           5 MONU SINGH             5 MONU SINGH
+          0 DATA NOT FOUND       0 DATA NOT FOUND         8 TABLETHREE8
+          0 DATA NOT FOUND       0 DATA NOT FOUND         7 TABLETHREE7
+          0 DATA NOT FOUND       0 DATA NOT FOUND         6 TABLETHREE6
+========================================================================================================================
+FULL OUTER JOIN THREE TABLE
+========================================================================================================================
+SQL>SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     FULL OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     FULL OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+	ORDER BY T1.ID;	 
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME    TABLETWO_ID TABLETWO_NAME   TABLETHREE_ID TABLETHREE_NAME
+----------- ---------------- ---------- ------------------ ------------- ----------
+          1 ADARSH KUMAR      1 ADARSH KUMAR              1 ADARSH KUMAR
+          2 RADHA SINGH       2 RADHA SINGH               2 RADHA SINGH
+          3 AMIT KUMAR        3 AMIT KUMAR                3 AMIT KUMAR
+          4 SONU SINGH        4 SONU SINGH                4 SONU SINGH
+          5 MONU SINGH        5 MONU SINGH                5 MONU SINGH
+          6 TABLEONE6         0 DATA NOT FOUND            0 DATA NOT FOUND
+          7 TABLEONE7         0 DATA NOT FOUND            0 DATA NOT FOUND
+          8 TABLEONE8         0 DATA NOT FOUND            0 DATA NOT FOUND
+          0 DATA NOT FOUND    0 DATA NOT FOUND            7 TABLETHREE7
+          0 DATA NOT FOUND    0 DATA NOT FOUND            8 TABLETHREE8
+          0 DATA NOT FOUND    8 TABLETWO8                 0 DATA NOT FOUND
+          0 DATA NOT FOUND    0 DATA NOT FOUND            6 TABLETHREE6
+          0 DATA NOT FOUND    6 TABLETWO6                 0 DATA NOT FOUND
+          0 DATA NOT FOUND    7 TABLETWO7                 0 DATA NOT FOUND	 
+============================= alternate syntax==========================================================================
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     LEFT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+UNION
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     RIGHT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME;
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME     TABLETWO_ID TABLETWO_NAME   TABLETHREE_ID TABLETHREE_NAME
+----------- ---------------- ----------- -------------- ------------- ----------
+          0 DATA NOT FOUND      0 DATA NOT FOUND           6 TABLETHREE6
+          0 DATA NOT FOUND      0 DATA NOT FOUND           7 TABLETHREE7
+          0 DATA NOT FOUND      0 DATA NOT FOUND           8 TABLETHREE8
+          1 ADARSH KUMAR        1 ADARSH KUMAR             1 ADARSH KUMAR
+          2 RADHA SINGH         2 RADHA SINGH              2 RADHA SINGH
+          3 AMIT KUMAR          3 AMIT KUMAR               3 AMIT KUMAR
+          4 SONU SINGH          4 SONU SINGH               4 SONU SINGH
+          5 MONU SINGH          5 MONU SINGH               5 MONU SINGH
+          6 TABLEONE6           0 DATA NOT FOUND           0 DATA NOT FOUND
+          7 TABLEONE7           0 DATA NOT FOUND           0 DATA NOT FOUND
+          8 TABLEONE8           0 DATA NOT FOUND           0 DATA NOT FOUND
+========================================================================================================================
+CROSS JOIN THREE TABLE
+========================================================================================================================	  
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     CROSS JOIN TABLETWO T2
+     CROSS JOIN TABLETHREE T3;
+-------------------------------------------------------------------------------------------------------
+	 
+========================================================================================================================
+LEFT OUTER JOIN WHERE NULL
+========================================================================================================================
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     LEFT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     LEFT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+	 WHERE T2.NAME IS NULL
+	 AND T3.NAME IS NULL
+	 ORDER BY T1.ID;  
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME   TABLETWO_ID TABLETWO_NAME     TABLETHREE_ID TABLETHREE_NAME
+----------- ---------------- ----------- ---------------- ------------- ------------
+          6 TABLEONE6          0 DATA NOT FOUND           0 DATA NOT FOUND
+          7 TABLEONE7          0 DATA NOT FOUND           0 DATA NOT FOUND
+          8 TABLEONE8          0 DATA NOT FOUND           0 DATA NOT FOUND
+========================================================================================================================
+RIGHT OUTER JOIN WHERE NULL
+========================================================================================================================
+SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	 FROM TABLEONE T1
+     RIGHT OUTER JOIN TABLETWO T2
+     ON T1.NAME=T2.NAME
+     RIGHT OUTER JOIN TABLETHREE T3
+     ON T1.NAME=T3.NAME
+	  WHERE T1.NAME IS NULL
+	 AND T1.NAME IS NULL; 
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME      TABLETWO_ID TABLETWO_NAME   TABLETHREE_ID TABLETHREE_NAME
+----------- ---------------- ----------- ----------------- ------------- --------
+          0 DATA NOT FOUND        0 DATA NOT FOUND           8 TABLETHREE8
+          0 DATA NOT FOUND        0 DATA NOT FOUND           7 TABLETHREE7
+          0 DATA NOT FOUND        0 DATA NOT FOUND           6 TABLETHREE6
+========================================================================================================================
+OUTER JOIN WHERE NULL
+========================================================================================================================
+	SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	FROM TABLEONE T1
+    LEFT OUTER JOIN TABLETWO T2
+      ON T1.NAME=T2.NAME
+    LEFT OUTER JOIN TABLETHREE T3
+      ON T1.NAME=T3.NAME
+	  WHERE T2.NAME IS NULL
+	AND T3.NAME IS NULL
+UNION	 
+    SELECT
+       NVL(T1.ID,0)AS TABLEONE_ID,NVL(T1.NAME,'DATA NOT FOUND')AS TABLEONE_NAME
+	  ,NVL(T2.ID,0)AS TABLETWO_ID,NVL(T2.NAME,'DATA NOT FOUND')AS TABLETWO_NAME
+	  ,NVL(T3.ID,0)AS TABLETHREE_ID,NVL(T3.NAME,'DATA NOT FOUND')AS TABLETHREE_NAME
+	FROM TABLEONE T1
+    RIGHT OUTER JOIN TABLETWO T2
+      ON T1.NAME=T2.NAME
+    RIGHT OUTER JOIN TABLETHREE T3
+	  ON T1.NAME=T3.NAME
+	  WHERE T1.NAME IS NULL
+	AND T1.NAME IS NULL;
+----------------------------------------------------------------------------------------
+(
+	(
+	 SELECT T1.ID,T1.NAME FROM TABLEONE T1
+	  MINUS
+	 SELECT T2.ID,T2.NAME FROM TABLETWO T2
+	)
+UNION
+	(
+	 SELECT T2.ID,T2.NAME FROM TABLETWO T2
+	 MINUS
+	 SELECT T3.ID,T3.NAME FROM TABLETHREE T3
+	)
+UNION
+	(
+	 SELECT T3.ID,T3.NAME FROM TABLETHREE T3
+	 MINUS
+	 SELECT T1.ID,T1.NAME FROM TABLEONE T1
+	)
+)	
+---------------------------------------------------------------------------------------------
+	SELECT NVL(T1.ID,0) ,NVL(T1.NAME,'NO DATA FOUND')	
+	FROM TABLEONE T1
+	LEFT OUTER JOIN TABLETWO T2
+	ON T1.NAME=T2.NAME
+	WHERE T2.NAME IS NULL
+UNION
+	SELECT NVL(T2.ID,0) ,NVL(T2.NAME,'NO DATA FOUND')
+	FROM TABLETWO T2
+	LEFT OUTER JOIN TABLETHREE T3
+	ON T2.NAME=T3.NAME
+	WHERE T3.NAME IS NULL
+UNION
+	SELECT NVL(T3.ID,0) ,NVL(T3.NAME,'NO DATA FOUND')
+	FROM TABLETHREE T3
+	LEFT OUTER JOIN TABLEONE T1
+	ON T3.NAME=T1.NAME
+	WHERE T1.NAME IS NULL
+/
+
+-------------------------------------------------------------------------------------------------------
+TABLEONE_ID TABLEONE_NAME   TABLETWO_ID TABLETWO_NAME     TABLETHREE_ID TABLETHREE_NAME
+----------- -------------- ----------- ------------------- ------------- --------
+          0 DATA NOT FOUND      0 DATA NOT FOUND           6 TABLETHREE6
+          0 DATA NOT FOUND      0 DATA NOT FOUND           7 TABLETHREE7
+          0 DATA NOT FOUND      0 DATA NOT FOUND           8 TABLETHREE8
+          6 TABLEONE6           0 DATA NOT FOUND           0 DATA NOT FOUND
+          7 TABLEONE7           0 DATA NOT FOUND           0 DATA NOT FOUND
+          8 TABLEONE8           0 DATA NOT FOUND           0 DATA NOT FOUND
+========================================================================================================================
