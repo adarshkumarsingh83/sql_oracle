@@ -73,7 +73,7 @@ INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES(400,'amit', 'amit@kumar')
 
  ```
 
-### getEmpFunction 
+### CREATION OF getEmpFunction 
 
 ```
 CREATE OR REPLACE FUNCTION getEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
@@ -119,9 +119,12 @@ END getEmpFunction;
 
 ```
 
+### DELETION OF getEmpFunction 
+* DROP FUNCTION getEmpFunction; 
+
 ---
 
-### getEmpFunction
+### CREATION OF getEmpFunction
 
 ```
 CREATE OR REPLACE FUNCTION getEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
@@ -154,10 +157,10 @@ IS
 		   RAISE_APPLICATION_ERROR(-20001, V_EMP_NO || ':$:' || SQLERRM, TRUE) ;	
 END getEmpFunction;
 /
-DROP FUNCTION getEmpFunction; 
 
 ```
-
+### DELETION OF getEmpFunction
+* DROP FUNCTION getEmpFunction; 
 
 ---
 
@@ -189,7 +192,7 @@ DROP FUNCTION getEmpFunction;
 
  ```
 
-### getAllEmpFunction
+### CREATION OF getAllEmpFunction
 
 ```
 CREATE OR REPLACE FUNCTION getAllEmpFunction(V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
@@ -219,6 +222,9 @@ END getAllEmpFunction;
 
 ```
 
+### DELETION OF getAllEmpFunction
+* DROP FUNCTION getAllEmpFunction; 
+
 ---
 
 ### BLOCK FOR CALLING insertEmpFunction
@@ -234,7 +240,7 @@ END;
 /
 ```
 
-### insertEmpFunction 
+### CREATION OF  insertEmpFunction 
 
 ```
 CREATE OR REPLACE FUNCTION insertEmpFunction(
@@ -268,6 +274,9 @@ END insertEmpFunction;
 
 ```
 
+### DELETION OF insertEmpFunction
+* DROP FUNCTION insertEmpFunction;
+
 ---
 
 ### BLOCK FOR CALLING updateEmpFunction
@@ -282,7 +291,7 @@ END;
 /
 ```
 
-### updateEmpFunction
+### CREATION OF updateEmpFunction
 
 ```
 CREATE OR REPLACE FUNCTION updateEmpFunction(
@@ -314,6 +323,9 @@ END updateEmpFunction;
 
 ```
 
+### DELETION OF updateEmpFunction
+* DROP FUNCTION updateEmpFunction;
+
 ---
 
 ### BLOCK FOR CALLING deleteEmpFunction
@@ -329,7 +341,7 @@ END;
 /
 ```
 
-### deleteEmpFunction
+### CRATION OF deleteEmpFunction
 
 ```
 CREATE OR REPLACE FUNCTION deleteEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE)RETURN VARCHAR
@@ -359,3 +371,5 @@ CREATE OR REPLACE FUNCTION deleteEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE)RET
 
 ```
 
+### DELETION OF deleteEmpFunction
+* DROP FUNCTION deleteEmpFunction;
