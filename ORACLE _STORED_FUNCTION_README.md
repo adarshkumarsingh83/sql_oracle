@@ -1,11 +1,26 @@
+### Creating Empployee table 
 
+```
 CREATE TABLE  Employee (
   `EmpNo` integer(10),
   `EmpName` varchar(45) NOT NULL,
   `EmpEmail` varchar(30) NOT NULL,
   PRIMARY KEY (`EmpNo`)
 ) ;
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+### TO INSERT DATA INTO THE TABLE
+```
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES (100,'adarsh', 'adarsh@kumar');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES (200,'radha', 'radha@singh');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES(300,'sonu', 'sonu@singh');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES(400,'amit', 'amit@kumar');
+
+```
+
+### USING BLOCK TO INSERT THE DATA 
+```
  SET SERVEROUTPUT ON;
  DECLARE
    EMP_INSERT_MSG VARCHAR(50);
@@ -22,7 +37,14 @@ CREATE TABLE  Employee (
 	DBMS_OUTPUT.PUT_LINE(EMP_INSERT_MSG);
  END;
  /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+ ```
+
+---
+
+### BLOCK FOR CALLING getEmpFunction
+
+```
  SET SERVEROUTPUT ON;
  DECLARE
    V_ONE_EMP_DATA_CURSOR SYS_REFCURSOR;
@@ -48,7 +70,12 @@ CREATE TABLE  Employee (
            END IF;
  END;
  /
- --------------------------------------------------------------------------------------------------------------------------------------------------
+
+ ```
+
+### getEmpFunction 
+
+```
 CREATE OR REPLACE FUNCTION getEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
 IS
    V_COUNT  NUMBER;
@@ -88,7 +115,14 @@ IS
 		   RAISE_APPLICATION_ERROR(-20001, V_EMP_NO || ':$:' || SQLERRM, TRUE) ;	
 END getEmpFunction;
 /
--------------------------------------------------------------------------------------------------
+
+```
+
+---
+
+### getEmpFunction
+
+```
 CREATE OR REPLACE FUNCTION getEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
 IS
    V_COUNT  NUMBER;
@@ -120,7 +154,16 @@ IS
 END getEmpFunction;
 /
 DROP FUNCTION getEmpFunction; 
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+
+---
+
+
+### BLOCK FOR CALLING getAllEmpFunction
+
+```
  SET SERVEROUTPUT ON;
  DECLARE
    V_EMP_ALL_DATA_CURSOR SYS_REFCURSOR;
@@ -142,7 +185,12 @@ DROP FUNCTION getEmpFunction;
       END IF;
  END;
  /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+ ```
+
+### getAllEmpFunction
+
+```
 CREATE OR REPLACE FUNCTION getAllEmpFunction(V_SELECT_ERROR_MSG OUT VARCHAR) RETURN SYS_REFCURSOR
 IS
    V_COUNT  NUMBER;
@@ -167,7 +215,14 @@ BEGIN
 				  RAISE_APPLICATION_ERROR (-20001, 'EXCEPTION GENERATED :$:' || SQLERRM, TRUE) ;
 END getAllEmpFunction;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+---
+
+### BLOCK FOR CALLING insertEmpFunction
+
+```
 SET SERVEROUTPUT ON;
 DECLARE
    DATA VARCHAR(50) ;
@@ -176,7 +231,11 @@ DATA :=insertEmpFunction(&EMPNO,'&EMPNAME','&EMPEMAIL');
 DBMS_OUTPUT.PUT_LINE(DATA);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+### insertEmpFunction 
+
+```
 CREATE OR REPLACE FUNCTION insertEmpFunction(
   V_EMPNO IN EMPLOYEE.EMPNO%TYPE
  ,V_EMPNAME IN EMPLOYEE.EMPNAME%TYPE
@@ -205,7 +264,13 @@ BEGIN
         WHEN OTHERS THEN RAISE_APPLICATION_ERROR (-20001, V_EMPNO ||':$:'||V_EMPNAME||':$:'||V_EMPEMAIL|| ':$:' ||SQLERRM, TRUE) ;
 END insertEmpFunction;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+---
+
+### BLOCK FOR CALLING updateEmpFunction
+```
 SET SERVEROUTPUT ON;
 DECLARE
    DATA VARCHAR(50) ;
@@ -214,7 +279,11 @@ DATA :=updateEmpFunction(&EMPNO,'&EMPNAME','&EMPEMAIL');
 DBMS_OUTPUT.PUT_LINE(DATA);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+### updateEmpFunction
+
+```
 CREATE OR REPLACE FUNCTION updateEmpFunction(
   V_EMPNO IN EMPLOYEE.EMPNO%TYPE
  ,V_EMPNAME IN EMPLOYEE.EMPNAME%TYPE
@@ -241,7 +310,14 @@ BEGIN
 COMMIT;
 END updateEmpFunction;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+---
+
+### BLOCK FOR CALLING deleteEmpFunction
+
+```
 SET SERVEROUTPUT ON;
 DECLARE
    DATA VARCHAR(50) ;
@@ -250,7 +326,11 @@ DATA := deleteEmpFunction(&EMPNO);
 DBMS_OUTPUT.PUT_LINE(DATA);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+### deleteEmpFunction
+
+```
 CREATE OR REPLACE FUNCTION deleteEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE)RETURN VARCHAR
    IS
    V_EMP_DEL_MSG VARCHAR(50);
@@ -275,4 +355,6 @@ CREATE OR REPLACE FUNCTION deleteEmpFunction(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE)RET
            WHEN OTHERS THEN RAISE_APPLICATION_ERROR(-20001, V_EMP_NO || ':$:' || SQLERRM, TRUE);
  END deleteEmpFunction;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
