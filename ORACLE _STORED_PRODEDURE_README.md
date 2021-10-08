@@ -1,11 +1,26 @@
 
+### TO CREATE DB TABLE 
+
+```
 CREATE TABLE  Employee (
-  `EmpNo` integer(10),
-  `EmpName` varchar(45) NOT NULL,
-  `EmpEmail` varchar(30) NOT NULL,
-  PRIMARY KEY (`EmpNo`)
-) ;
---------------------------------------------------------------------------------------------------------------------------------------------------
+  EmpNo NUMBER(3),
+  EmpName VARCHAR2(45) NOT NULL,
+  EmpEmail VARCHAR2(30) NOT NULL,
+  PRIMARY KEY (EmpNo)
+);
+```
+
+### TO INSERT DATA INTO THE TABLE 
+```
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES (100,'adarsh', 'adarsh@kumar');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES (200,'radha', 'radha@singh');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES(300,'sonu', 'sonu@singh');
+INSERT INTO Employee (EmpNo, EmpName, EmpEmail) VALUES(400,'amit', 'amit@kumar');
+```
+
+### TO INSERT THE DATA USING BLOCK 
+
+```
  SET SERVEROUTPUT ON;
  DECLARE
    EMP_INSERT_MSG VARCHAR(50);
@@ -22,7 +37,13 @@ CREATE TABLE  Employee (
 	DBMS_OUTPUT.PUT_LINE(EMP_INSERT_MSG);
  END;
  /
---------------------------------------------------------------------------------------------------------------------------------------------------
+ ```
+
+---
+
+### TO CALL THE STORED PROECURE 
+
+```
 SET SERVEROUTPUT ON;
  DECLARE
    V_EMP_DATA_CURSOR SYS_REFCURSOR;
@@ -44,7 +65,11 @@ SET SERVEROUTPUT ON;
         END IF;	
  END;
  /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+ ```
+### GET EMLOYEE DATA STORED PROCEDURE 
+
+```
 CREATE OR REPLACE PROCEDURE getEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,EMP_DATA_CURSOR OUT SYS_REFCURSOR,V_SELECT_ERROR_MSG OUT VARCHAR)
 IS
 BEGIN
@@ -68,7 +93,13 @@ BEGIN
 		    RAISE_APPLICATION_ERROR(-20001, V_EMP_NO || ':$:' || SQLERRM, TRUE) ;
 END getEmpProcedure;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+
+-----
+
+### TO CALL THE getAllEmpProcedure PROCEDURE
+```
 SET SERVEROUTPUT ON;
  DECLARE
    V_EMP_DATA_CURSOR SYS_REFCURSOR;
@@ -90,7 +121,10 @@ SET SERVEROUTPUT ON;
     END IF;	
  END;
  /
---------------------------------------------------------------------------------------------------------------------------------------------------
+ ```
+
+### TO FETCH ALL THE EMPLOYEE 
+```
 CREATE OR REPLACE PROCEDURE getAllEmpProcedure(EMP_ALL_DATA_CURSOR OUT SYS_REFCURSOR,V_SELECT_ERROR_MSG OUT VARCHAR)
 IS
 BEGIN
@@ -111,7 +145,13 @@ BEGIN
 	      RAISE_APPLICATION_ERROR (-20001, 'EXCEPTION GENERATED :$:' || SQLERRM, TRUE) ;
 END getAllEmpProcedure;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+---
+
+### TO CALL THE insertEmpProcedure PROCEDURE
+
+```
 SET SERVEROUTPUT ON;
 DECLARE
    DATA VARCHAR(50) ;
@@ -120,7 +160,11 @@ insertEmpProcedure(&EMPNO,'&EMPNAME','&EMPEMAIL' ,DATA);
 DBMS_OUTPUT.PUT_LINE(DATA);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+```
+### TO INSERT DATA INTO THE EMPLOYEE 
+
+```
 CREATE OR REPLACE PROCEDURE insertEmpProcedure(
   V_EMPNO IN EMPLOYEE.EMPNO%TYPE
  ,V_EMPNAME IN EMPLOYEE.EMPNAME%TYPE
@@ -143,7 +187,12 @@ BEGIN
         WHEN OTHERS THEN RAISE_APPLICATION_ERROR (-20001, V_EMPNO ||':$:'||V_EMPNAME||':$:'||V_EMPEMAIL|| ':$:' ||SQLERRM, TRUE) ;
 END insertEmpProcedure;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+---
+
+### TO CALL updateEmpProcedure PROCEDURE
+```
 SET SERVEROUTPUT ON;
 DECLARE
    DATA VARCHAR(50) ;
@@ -152,7 +201,10 @@ updateEmpProcedure(&EMPNO,'&EMPNAME','&EMPEMAIL' ,DATA);
 DBMS_OUTPUT.PUT_LINE(DATA);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+### UPDATE EMPLOYEE PROCEDURE
+```
 CREATE OR REPLACE PROCEDURE updateEmpProcedure(
   V_EMPNO IN EMPLOYEE.EMPNO%TYPE
  ,V_EMPNAME IN EMPLOYEE.EMPNAME%TYPE
@@ -174,7 +226,13 @@ BEGIN
 COMMIT;
 END updateEmpProcedure;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+---
+
+### TO CALL deleteEmpProcedure
+
+```
 SET SERVEROUTPUT ON;
 DECLARE
    V_EMP_DEL_MSG VARCHAR(50) ;
@@ -183,7 +241,11 @@ BEGIN
 	DBMS_OUTPUT.PUT_LINE(V_EMP_DEL_MSG);
 END;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+### DELETE EMPLOYEE PROCEDURE
+
+```
 CREATE OR REPLACE PROCEDURE deleteEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE,V_EMP_DEL_MSG OUT VARCHAR)
    IS
      V_EMP_DEL_COUNT NUMBER(10) DEFAULT 0;
@@ -201,4 +263,4 @@ CREATE OR REPLACE PROCEDURE deleteEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE,V
 	     WHEN OTHERS THEN RAISE_APPLICATION_ERROR(-20001, V_EMP_NO || ':$:' || SQLERRM, TRUE);
    END deleteEmpProcedure;
 /
---------------------------------------------------------------------------------------------------------------------------------------------------
+```
