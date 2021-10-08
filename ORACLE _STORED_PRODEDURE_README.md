@@ -67,7 +67,7 @@ SET SERVEROUTPUT ON;
  /
 
  ```
-### GET EMLOYEE DATA STORED PROCEDURE 
+### CREATION OF getEmpProcedure 
 
 ```
 CREATE OR REPLACE PROCEDURE getEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE ,EMP_DATA_CURSOR OUT SYS_REFCURSOR,V_SELECT_ERROR_MSG OUT VARCHAR)
@@ -96,6 +96,9 @@ END getEmpProcedure;
 
 ```
 
+### DELETION OF getEmpProcedure
+* DROP PROCEDURE getEmpProcedure
+
 -----
 
 ### TO CALL THE getAllEmpProcedure PROCEDURE
@@ -123,7 +126,7 @@ SET SERVEROUTPUT ON;
  /
  ```
 
-### TO FETCH ALL THE EMPLOYEE 
+### CREATION OF getAllEmpProcedure
 ```
 CREATE OR REPLACE PROCEDURE getAllEmpProcedure(EMP_ALL_DATA_CURSOR OUT SYS_REFCURSOR,V_SELECT_ERROR_MSG OUT VARCHAR)
 IS
@@ -147,6 +150,9 @@ END getAllEmpProcedure;
 /
 ```
 
+### DELETION OF getAllEmpProcedure
+* DROP PROCEDURE getAllEmpProcedure
+
 ---
 
 ### TO CALL THE insertEmpProcedure PROCEDURE
@@ -162,7 +168,8 @@ END;
 /
 
 ```
-### TO INSERT DATA INTO THE EMPLOYEE 
+
+### CREATION OF insertEmpProcedure
 
 ```
 CREATE OR REPLACE PROCEDURE insertEmpProcedure(
@@ -189,6 +196,9 @@ END insertEmpProcedure;
 /
 ```
 
+### DELETION OF insertEmpProcedure
+* DROP PROCEDURE insertEmpProcedure
+
 ---
 
 ### TO CALL updateEmpProcedure PROCEDURE
@@ -203,7 +213,7 @@ END;
 /
 ```
 
-### UPDATE EMPLOYEE PROCEDURE
+### CREATION OF updateEmpProcedure
 ```
 CREATE OR REPLACE PROCEDURE updateEmpProcedure(
   V_EMPNO IN EMPLOYEE.EMPNO%TYPE
@@ -228,6 +238,9 @@ END updateEmpProcedure;
 /
 ```
 
+### DELETION OF updateEmpProcedure
+* DROP PROCEDURE updateEmpProcedure
+
 ---
 
 ### TO CALL deleteEmpProcedure
@@ -243,7 +256,7 @@ END;
 /
 ```
 
-### DELETE EMPLOYEE PROCEDURE
+### CREATION OF deleteEmpProcedure
 
 ```
 CREATE OR REPLACE PROCEDURE deleteEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE,V_EMP_DEL_MSG OUT VARCHAR)
@@ -264,3 +277,5 @@ CREATE OR REPLACE PROCEDURE deleteEmpProcedure(V_EMP_NO IN EMPLOYEE.EMPNO%TYPE,V
    END deleteEmpProcedure;
 /
 ```
+### DELETION OF deleteEmpProcedure
+* DROP PROCEDURE deleteEmpProcedure
